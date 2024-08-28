@@ -25,9 +25,13 @@ class BdfPzContext(BeakerContext):
         super().__init__(beaker_kernel, BdfPzAgent, config)
 
     async def setup(self, context_info=None, parent_header=None):
+        """
+        This runs on setup and invokes the `procedures/python3/setup.py` script to 
+        configure the environment appropriately.
+        """
         command = "\n".join(
             [
-            self.get_code("setup", {"openai_key": os.environ.get("OPENAI_API_KEY")}),
+            self.get_code("setup", {"OPENAI_API_KEY": os.environ.get("OPENAI_API_KEY")}),
             ]
         )
         await self.execute(command)
