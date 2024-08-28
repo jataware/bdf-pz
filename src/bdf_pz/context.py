@@ -2,6 +2,7 @@
 #
 # SPDX-License-Identifier: MIT
 from typing import Dict, Any, TYPE_CHECKING
+import os
 
 from beaker_kernel.lib import BeakerContext
 from beaker_kernel.lib.utils import action
@@ -24,18 +25,15 @@ class BdfPzContext(BeakerContext):
         super().__init__(beaker_kernel, BdfPzAgent, config)
 
     async def setup(self, context_info=None, parent_header=None):
-        # Custom setup can be done here
-        pass
+        command = "\n".join(
+            [
+            self.get_code("setup", {"openai_key": os.environ.get("OPENAI_API_KEY")}),
+            ]
+        )
+        await self.execute(command)
 
-    @action(default_payload='{\n  "question": "Will I find love?"\n}')
-    async def ask_eight_ball(self, message):
-        """
-        An example of an action. This just calls the existing tool defined on the agent.
-        """
-        content = message.content
-        question = content.get("question")
-        self.beaker_kernel.log("ask_eight_ball", f"Asking question: {question}")
-        result = await self.agent.magic_eight_ball(content.get("question"))
-        self.beaker_kernel.log("ask_eight_ball", f"Got answer: {result}")
-        return str(result)
+    async def auto_context(self):
+            return f"""
+            You are an assistant helping biomedical researchers users the Palimpzest library to extract references from scientific papers.
+            """.strip()
 
