@@ -15,6 +15,7 @@
 ```console
 pip install -e .
 pip install git+https://github.com/mitdbg/palimpzest.git@main
+export OPENAI_API_KEY=your key here
 ```
 
 ## Running
