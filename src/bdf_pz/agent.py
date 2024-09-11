@@ -9,16 +9,7 @@ from beaker_kernel.lib import BeakerAgent
 if TYPE_CHECKING:
     from beaker_kernel.kernel import BeakerKernel
 
-from dataclasses import dataclass, field
-
-@dataclass
-class PzFields:
-    fields: Dict[str, Tuple[str, bool]] = field(default_factory=dict)
-
-    def __post_init__(self):
-        for name, (description, required) in self.fields.items():
-            setattr(self, name, {"description": description, "required": required})
-
+import json
 
 class BdfPzAgent(BeakerAgent):
     """
@@ -65,7 +56,7 @@ class BdfPzAgent(BeakerAgent):
                                          field_required: list[bool],
                                          agent: AgentRef) -> str:
         """
-        This function takes in a dictionary of fields to be used to generate an extraction schema. This should be used
+        This function takes in a set of fields to be used to generate an extraction schema. This should be used
         when the user is interested in generating a new type of extraction schema. For example, let's say the user is interested
         in extracting parameter values from a set of scientific papers. The user can define the fields of the schema to be used for the extraction.
         In this case the schema name might be `Parameter` and the field information is passed in via three lists which must 
@@ -104,7 +95,9 @@ class BdfPzAgent(BeakerAgent):
         return extracted_references    
 
     @tool()
-    async def extract_schema(self, policy_method: str, schema: str, agent: AgentRef) -> str:
+    async def extract_schema(self, policy_method: str, schema: str, 
+                             agent: AgentRef,
+                             loop: LoopControllerRef) -> str:
         """
         This function performs extractions from a set of pre-loaded scientific papers for the given schema. 
         The policy method chosen is either to minimize the extraction cost or to maximize the quality 
@@ -127,11 +120,19 @@ class BdfPzAgent(BeakerAgent):
                 "schema": schema,
             },
         )
-        result = await agent.context.evaluate(
-            code,
-            parent_header={},
-        )
+        loop.set_state(loop.STOP_SUCCESS)
+        return json.dumps(
+            {
+                "action": "code_cell",
+                "language": "python3",
+                "content": code.strip(),
+            }
+        )        
+        # result = await agent.context.evaluate(
+        #     code,
+        #     parent_header={},
+        # )
 
-        extracted_references = result.get("return")
+        # extracted_references = result.get("return")
 
-        return extracted_references
+        # return extracted_references
