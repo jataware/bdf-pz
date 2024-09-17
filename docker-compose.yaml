@@ -1,0 +1,20 @@
+---
+
+version: '3'
+services:
+  jupyter:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - "8888:8888"
+    environment:
+      - DEBUG=1
+      - JUPYTER_SERVER=http://jupyter:8888
+      - ENABLE_USER_PROMPT=true
+      - ENABLE_CHECKPOINTS=true  
+      - PYTHONPATH=/jupyter
+    env_file:
+      - .env      
+    working_dir: /jupyter
+    command: ["beaker", "dev", "watch", "--ip", "0.0.0.0"]

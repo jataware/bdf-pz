@@ -4,6 +4,7 @@ to_extract = papers.convert({{ schema }}, desc={{ schema }}.__doc__, cardinality
 output = to_extract
 
 policy_method = "{{ policy_method }}"
+
 engine = pz.StreamingSequentialExecution
 if policy_method == "min_cost":
     policy = pz.MinCost()

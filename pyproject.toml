@@ -25,7 +25,7 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dependencies = [
-  "beaker_kernel~=1.6.5",
+  "beaker_kernel~=1.6.8",
   "pandas",
 ]
 
