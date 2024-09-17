@@ -1,5 +1,5 @@
 papers = pz.Dataset("bdf-usecase3-tiny", schema=ScientificPaper)
-references = papers.convert(Reference, desc="A paper cited in the reference section", cardinality="oneToMany")  
+references = papers.convert(Reference, desc="A paper cited in the reference section", cardinality=pz.Cardinality.ONE_TO_MANY)
 
 output = references
 
