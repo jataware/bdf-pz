@@ -1,5 +1,5 @@
 papers = pz.Dataset("bdf-usecase3-tiny", schema=ScientificPaper)
-to_extract = papers.convert({{ schema }}, desc={{ schema }}.__doc__, cardinality="oneToMany")  
+to_extract = papers.convert({{ schema }}, desc={{ schema }}.__doc__, cardinality=pz.Cardinality.ONE_TO_MANY)  
 
 output = to_extract
 
