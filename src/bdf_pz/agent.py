@@ -120,19 +120,19 @@ class BdfPzAgent(BeakerAgent):
                 "schema": schema,
             },
         )
-        loop.set_state(loop.STOP_SUCCESS)
-        return json.dumps(
-            {
-                "action": "code_cell",
-                "language": "python3",
-                "content": code.strip(),
-            }
-        )        
-        # result = await agent.context.evaluate(
-        #     code,
-        #     parent_header={},
+        # loop.set_state(loop.STOP_SUCCESS)
+        # return json.dumps(
+        #     {
+        #         "action": "code_cell",
+        #         "language": "python3",
+        #         "content": code.strip(),
+        #     }
         # )
+        result = await agent.context.evaluate(
+            code,
+            parent_header={},
+        )
 
-        # extracted_references = result.get("return")
+        extracted_references = result.get("return")
 
-        # return extracted_references
+        return extracted_references
