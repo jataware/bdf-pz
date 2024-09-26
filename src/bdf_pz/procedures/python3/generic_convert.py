@@ -4,6 +4,7 @@ output = to_extract
 
 policy_method = "{{ policy_method }}"
 
+# optimization block
 engine = pz.StreamingSequentialExecution
 if policy_method == "min_cost":
     policy = pz.MinCost()
@@ -12,8 +13,8 @@ elif policy_method == "max_quality":
 iterable  =  pz.Execute(output,
                         policy = policy,
                         nocache=True,
-                        allow_code_synth=False,
-                        allow_token_reduction=False,
+                        allow_code_synth={{ allow_code_synth }},
+                        allow_token_reduction={{ allow_token_reduction }},
                         execution_engine=engine)
 
 results = []
