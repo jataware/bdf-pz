@@ -18,35 +18,12 @@ class BdfPzAgent(BeakerAgent):
 
     """
 
-    # @tool()
-    # async def extract_references(self, policy_method: str, agent: AgentRef) -> str:
-    #     """
-    #     This function extracts references from a set of pre-loaded scientific papers. The policy method chosen is either to minimize 
-    #     the extraction cost or to maximize the quality of the extraction. This returns the extractions as a Pandas DataFrame.
-
-    #     Args:
-    #         policy_method (str): Either "min_cost" or "max_quality". Defaults to "min_cost".
-
-    #     Returns:
-    #         str: returns the extracted references as a Pandas DataFrame called `references_df`.
-
-    #     You should show the user the result after this function runs.
-    #     """
-
-    #     code = agent.context.get_code(
-    #         "extract_references",
-    #         {
-    #             "policy_method": policy_method,
-    #         },
-    #     )
-    #     result = await agent.context.evaluate(
-    #         code,
-    #         parent_header={},
-    #     )
-
-    #     extracted_references = result.get("return")
-
-    #     return extracted_references
+    async def auto_context(self):
+        return f"""You are an assistent that is intended to assist users in using Palimpzest.
+        Try to identify all of the steps needed, and all of the tools. Assume the user wants to do all of the steps at once.
+        
+        If the user asks to extract something from a set of documents, you can use palimpzeest to do this. First, generate a schema for the extraction. Then, if necessary filter the data to only include the relevant documents. Next, convert the dataset to the schema that was generated. Finally, execute the workload to extract the information from the dataset.
+        """
     
     @tool()
     async def generate_extraction_schema(self, schema_name: str, 
@@ -87,60 +64,10 @@ class BdfPzAgent(BeakerAgent):
             code,
             parent_header={},
         )
-
+        print(code)
         extracted_references = result.get("return")
 
         return extracted_references    
-
-    # @tool()
-    # async def generic_convert(self, policy_method: str, 
-    #                          schema: str, 
-    #                          allow_code_synth: str,
-    #                          allow_token_reduction: str,
-    #                          agent: AgentRef,
-    #                          loop: LoopControllerRef) -> str:
-    #     """
-    #     This function performs extractions from a set of pre-loaded scientific papers for the given schema. 
-    #     The policy method chosen is either to minimize the extraction cost or to maximize the quality 
-    #     of the extraction. This returns the extractions as a Pandas DataFrame.
-
-    #     Args:
-    #         policy_method (str): Either "min_cost" or "max_quality". Defaults to "min_cost".
-    #         schema (str): The schema to use for the extraction.
-    #         allow_code_synth (str): Whether to allow code synthesis or not. Defaults to "False".
-    #         allow_token_reduction (str): Whether to allow token reduction or not. Defaults to "False".
-
-    #     Returns:
-    #         str: returns the extracted references as a Pandas DataFrame called `results_df`.
-
-    #     You should show the user the result after this function runs.
-    #     """
-
-    #     code = agent.context.get_code(
-    #         "generic_convert",
-    #         {
-    #             "policy_method": policy_method,
-    #             "schema": schema,
-    #             "allow_code_synth": eval(allow_code_synth),
-    #             "allow_token_reduction": eval(allow_token_reduction),
-    #         },
-    #     )
-    #     loop.set_state(loop.STOP_SUCCESS)
-    #     return json.dumps(
-    #         {
-    #             "action": "code_cell",
-    #             "language": "python3",
-    #             "content": code.strip(),
-    #         }
-    #     )
-    #     result = await agent.context.evaluate(
-    #         code,
-    #         parent_header={},
-    #     )
-
-    #     extracted_references = result.get("return")
-
-    #     return extracted_references
     
     @tool()
     async def filter_data(self,
@@ -157,8 +84,6 @@ class BdfPzAgent(BeakerAgent):
 
         Returns:
             str: returns a new dataset corresponding to the filtered input dataset.
-
-        You should show the user the result after this function runs.
         """
         
         
@@ -176,6 +101,7 @@ class BdfPzAgent(BeakerAgent):
             parent_header={},
         )
 
+        print(code)
         dataset = result.get("return")
         return dataset
 
@@ -219,6 +145,7 @@ class BdfPzAgent(BeakerAgent):
         )
 
         dataset = result.get("return")
+        print(code)
 
         return dataset            
 
@@ -226,10 +153,12 @@ class BdfPzAgent(BeakerAgent):
     async def set_input_source(self,
                                agent: AgentRef) -> str:
         """
-        This function sets the input source for the agent. The input source is the source data that the user will run any workload on.
+        This function sets the input dataset for the agent to work with when using Palimpzest (pz). 
+        The input source, also known as the source dataset, or the input dataset, is any dataset that the user will run any workload on.
+
     
         Returns:
-            str: returns the input suorce dataset as a palimpzest dataset called `dataset`.
+            str: returns the input source dataset as a palimpzest dataset called `dataset`.
         """
         
         code = agent.context.get_code(
@@ -240,6 +169,7 @@ class BdfPzAgent(BeakerAgent):
             parent_header={},
         )
         source = result.get("return")
+        print(code)
 
         return source
 
@@ -293,6 +223,7 @@ class BdfPzAgent(BeakerAgent):
             parent_header={},
         )
 
+        print(code)
         output_data = result.get("return")
 
         return output_data
