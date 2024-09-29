@@ -11,6 +11,8 @@ if TYPE_CHECKING:
 
 import json
 
+JSON_OUTPUT = False
+
 class BdfPzAgent(BeakerAgent):
     """
     You are a helpful agent that is intended to assist users in using Palimpzest, a 
@@ -25,6 +27,34 @@ class BdfPzAgent(BeakerAgent):
         If the user asks to extract something from a set of documents, you can use palimpzeest to do this. First, generate a schema for the extraction. Then, if necessary filter the data to only include the relevant documents. Next, convert the dataset to the schema that was generated. Finally, execute the workload to extract the information from the dataset.
         """
     
+    @tool()
+    async def retrieve_dataset(self,
+                            agent: AgentRef) -> str:
+        """
+        This function lists the available papers in the system. The papers are also considered a dataset. The function prints which scientific papers are available for the user to use.
+        """
+
+        code = agent.context.get_code("retrieve_dataset",{},)
+
+        if JSON_OUTPUT:
+            return json.dumps(
+                {
+                    "action": "code_cell",
+                    "language": "python3",
+                    "content": code.strip(),
+                }
+            )
+        else:
+            result = await agent.context.evaluate(
+                code,
+                parent_header={},
+            )
+            print(code)
+            output = result.get("return")
+
+            return output    
+    
+
     @tool()
     async def generate_extraction_schema(self, schema_name: str, 
                                          schema_description: str, 
@@ -60,14 +90,24 @@ class BdfPzAgent(BeakerAgent):
                 "field_required": field_required,
             },
         )
-        result = await agent.context.evaluate(
-            code,
-            parent_header={},
-        )
-        print(code)
-        extracted_references = result.get("return")
 
-        return extracted_references    
+        if JSON_OUTPUT:
+            return json.dumps(
+                {
+                    "action": "code_cell",
+                    "language": "python3",
+                    "content": code.strip(),
+                }
+            )
+        else:
+            result = await agent.context.evaluate(
+                code,
+                parent_header={},
+            )
+            print(code)
+            output = result.get("return")
+
+            return output    
     
     @tool()
     async def filter_data(self,
@@ -96,15 +136,24 @@ class BdfPzAgent(BeakerAgent):
         )
         loop.set_state(loop.STOP_SUCCESS)
 
-        result = await agent.context.evaluate(
-            code,
-            parent_header={},
-        )
 
-        print(code)
-        dataset = result.get("return")
-        return dataset
+        if JSON_OUTPUT:
+            return json.dumps(
+                {
+                    "action": "code_cell",
+                    "language": "python3",
+                    "content": code.strip(),
+                }
+            )
+        else:
+            result = await agent.context.evaluate(
+                code,
+                parent_header={},
+            )
+            print(code)
+            output = result.get("return")
 
+            return output    
     @tool 
     async def convert_dataset(self,
                            input_dataset:str,
@@ -139,15 +188,23 @@ class BdfPzAgent(BeakerAgent):
             },
         )
 
-        result = await agent.context.evaluate(
-            code,
-            parent_header={},
-        )
+        if JSON_OUTPUT:
+            return json.dumps(
+                {
+                    "action": "code_cell",
+                    "language": "python3",
+                    "content": code.strip(),
+                }
+            )
+        else:
+            result = await agent.context.evaluate(
+                code,
+                parent_header={},
+            )
+            print(code)
+            output = result.get("return")
 
-        dataset = result.get("return")
-        print(code)
-
-        return dataset            
+            return output    
 
     @tool()
     async def set_input_source(self,
@@ -164,15 +221,23 @@ class BdfPzAgent(BeakerAgent):
         code = agent.context.get_code(
         "set_input_source", {})
         
-        result = await agent.context.evaluate(
-            code,
-            parent_header={},
-        )
-        source = result.get("return")
-        print(code)
+        if JSON_OUTPUT:
+            return json.dumps(
+                {
+                    "action": "code_cell",
+                    "language": "python3",
+                    "content": code.strip(),
+                }
+            )
+        else:
+            result = await agent.context.evaluate(
+                code,
+                parent_header={},
+            )
+            print(code)
+            output = result.get("return")
 
-        return source
-
+            return output    
 
 
     @tool()
@@ -218,12 +283,21 @@ class BdfPzAgent(BeakerAgent):
         )
         loop.set_state(loop.STOP_SUCCESS)
 
-        result = await agent.context.evaluate(
-            code,
-            parent_header={},
-        )
+        
+        if JSON_OUTPUT:
+            return json.dumps(
+                {
+                    "action": "code_cell",
+                    "language": "python3",
+                    "content": code.strip(),
+                }
+            )
+        else:
+            result = await agent.context.evaluate(
+                code,
+                parent_header={},
+            )
+            print(code)
+            output = result.get("return")
 
-        print(code)
-        output_data = result.get("return")
-
-        return output_data
+            return output    

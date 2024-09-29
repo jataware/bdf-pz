@@ -1,3 +1,3 @@
-dataset = pz.Dataset("bdf-usecase3-tiny", schema=ScientificPaper)
+dataset = pz.Dataset("bdf-demo", schema=ScientificPaper)
 
 dataset
