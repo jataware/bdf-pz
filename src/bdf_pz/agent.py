@@ -53,7 +53,8 @@ class BdfPzAgent(BeakerAgent):
             output = result.get("return")
 
             return output    
-    
+
+        return ""    
 
     @tool()
     async def generate_extraction_schema(self, schema_name: str, 
