@@ -1,4 +1,5 @@
-dataset = {{ input_dataset }}
+if "dataset" not in locals():
+    dataset = pz.Dataset("{{ input_dataset }}", schema=ScientificPaper)
 convert_schema = {{ schema }}
 
 caridinality_str = "{{cardinality}}"

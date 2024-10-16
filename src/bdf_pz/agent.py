@@ -26,6 +26,10 @@ class BdfPzAgent(BeakerAgent):
         Try to identify all of the steps needed, and all of the tools. Assume the user wants to do all of the steps at once.
         
         If the user asks to extract something from a set of documents, you can use palimpzeest to do this. First, generate a schema for the extraction. Then, if necessary filter the data to only include the relevant documents. Next, convert the dataset to the schema that was generated. Finally, execute the workload to extract the information from the dataset.
+        You may need to use multiple tools to accomplish this, including the ability to register datasets, setting the input source, filtering datasets, 
+        convert datasets, generating schemas, and executing workloads.
+
+        Make sure you understand all the steps needed to complete the task. Try to run all of the steps at once.
         """
 
     @tool()
@@ -46,6 +50,23 @@ class BdfPzAgent(BeakerAgent):
         code = agent.context.get_code("register_dataset", {"path": path, "name": name})
         response = await agent.context.evaluate(code)
         return response["return"]
+    
+    @tool()
+    async def unregister_dataset(self, dataset_name: str, agent: AgentRef) -> str:
+        """
+        This function unregisters a dataset with Palimpzest. It takes a dataset name and unregisters the dataset. The dataset will be unregistered and made 
+        unavailable for use in subsequent operations.
+
+        Args:
+            dataset_name (str): The name of the dataset to unregister.
+
+        Returns:
+            str: A message indicating the result of the unregistration process.
+        """
+
+        code = agent.context.get_code("unregister_dataset", {"dataset_name": dataset_name})
+        response = await agent.context.evaluate(code)
+        return response["return"]    
 
     @tool()
     async def list_datasets(self, agent: AgentRef) -> str:
@@ -80,15 +101,20 @@ class BdfPzAgent(BeakerAgent):
 
     @tool()
     async def retrieve_dataset(self,
-                            agent: AgentRef) -> list[str]:
+                               dataset_path: str,
+                               agent: AgentRef) -> list[str]:
         """
-        This function lists the available papers in the system. The papers are also considered a dataset. The function prints which scientific papers are available for the user to use.
+        This function lists the available papers for a given dataset path. The function prints which scientific papers are available 
+        for the user to use in the given dataset.
+
+        Args:
+            dataset_path (str): The path to the dataset to retrieve.
 
         Returns:
-            list[str]: a list of the names of the datasets available to the user.
+            list[str]: a list of the names of the papers available to the user in the given dataset.
         """
 
-        code = agent.context.get_code("retrieve_dataset",{},)
+        code = agent.context.get_code("retrieve_dataset",{"dataset_path": dataset_path},)
 
         if JSON_OUTPUT:
             return json.dumps(
@@ -189,8 +215,6 @@ class BdfPzAgent(BeakerAgent):
                 "filter_expression": filter_expression,
             },
         )
-        loop.set_state(loop.STOP_SUCCESS)
-
 
         if JSON_OUTPUT:
             return json.dumps(
@@ -208,7 +232,8 @@ class BdfPzAgent(BeakerAgent):
             print(code)
             output = result.get("return")
 
-            return output    
+            return output
+        
     @tool 
     async def convert_dataset(self,
                            input_dataset:str,
@@ -263,18 +288,23 @@ class BdfPzAgent(BeakerAgent):
 
     @tool()
     async def set_input_source(self,
+                               dataset: str,
                                agent: AgentRef) -> str:
         """
         This function sets the input dataset for the agent to work with when using Palimpzest (pz). 
         The input source, also known as the source dataset, or the input dataset, is any dataset that the user will run any workload on.
+        This function should be used at the beginning of any workflow to set the input dataset for the agent to work with when using Palimpzest (pz). 
 
-    
+        Args:
+            dataset (str): The name of the dataset to set as the input source.
+
+        Returns:
         Returns:
             str: returns the input source dataset as a palimpzest dataset called `dataset`.
         """
         
         code = agent.context.get_code(
-        "set_input_source", {})
+        "set_input_source", {"dataset": dataset})
         
         if JSON_OUTPUT:
             return json.dumps(
@@ -336,8 +366,6 @@ class BdfPzAgent(BeakerAgent):
                 "allow_token_reduction": allow_token_reduction,
             },
         )
-        loop.set_state(loop.STOP_SUCCESS)
-
         
         if JSON_OUTPUT:
             return json.dumps(

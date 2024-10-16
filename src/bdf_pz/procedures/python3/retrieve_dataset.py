@@ -1,4 +1,4 @@
 import os
-files = os.listdir("testdata/bdf-demo")
+files = os.listdir("{{ dataset_path }}")
 
 files

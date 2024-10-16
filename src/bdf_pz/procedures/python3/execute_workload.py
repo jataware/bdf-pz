@@ -1,4 +1,7 @@
-output = {{ output_dataset}}
+if "dataset" not in locals():
+    output = "{{ output_dataset }}"
+else:
+    output = dataset
 
 policy_method = "{{ policy_method }}"
 
