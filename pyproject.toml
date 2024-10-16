@@ -27,6 +27,7 @@ classifiers = [
 dependencies = [
   "beaker_kernel~=1.6.8",
   "pandas",
+  "prettytable",
 ]
 
 [project.urls]
