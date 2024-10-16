@@ -2,6 +2,7 @@
 #
 # SPDX-License-Identifier: MIT
 from typing import TYPE_CHECKING, Dict, Tuple, List
+import pandas as pd
 
 from archytas.tool_utils import AgentRef, LoopControllerRef, ReactContextRef, tool
 from beaker_kernel.lib import BeakerAgent
@@ -26,12 +27,65 @@ class BdfPzAgent(BeakerAgent):
         
         If the user asks to extract something from a set of documents, you can use palimpzeest to do this. First, generate a schema for the extraction. Then, if necessary filter the data to only include the relevant documents. Next, convert the dataset to the schema that was generated. Finally, execute the workload to extract the information from the dataset.
         """
-    
+
+    @tool()
+    async def register_dataset(self, path: str, name: str, agent: AgentRef) -> str:
+        """
+        This function registers a dataset with Palimpzest. It takes a path to a file or directory
+        and a name for the dataset. The dataset will be registered and made available for use in
+        subsequent operations.
+
+        Args:
+            path (str): The path to the file or directory to register as a dataset.
+            name (str): The name to give to the registered dataset. If not explicitly set, the name of the file or directory will be used.
+
+        Returns:
+            str: A message indicating the result of the registration process.
+        """
+
+        code = agent.context.get_code("register_dataset", {"path": path, "name": name})
+        response = await agent.context.evaluate(code)
+        return response["return"]
+
+    @tool()
+    async def list_datasets(self, agent: AgentRef) -> str:
+        """
+        This function lists all available datasets in the system. You should use these results to nicely format the output for the user.
+
+        Returns:
+            str: A table of the datasets in the system.
+        """
+
+        code = agent.context.get_code("list_datasets", {})
+
+        if JSON_OUTPUT:
+            return json.dumps(
+                {
+                    "action": "code_cell",
+                    "language": "python3",
+                    "content": code.strip(),
+                }
+            )
+        else:
+            result = await agent.context.evaluate(
+                code,
+                parent_header={},
+            )
+            print(code)
+            output = result.get("return")
+
+            return output
+
+
+
     @tool()
     async def retrieve_dataset(self,
-                            agent: AgentRef) -> str:
+                            agent: AgentRef) -> list[str]:
         """
         This function lists the available papers in the system. The papers are also considered a dataset. The function prints which scientific papers are available for the user to use.
+
+        Returns:
+            list[str]: a list of the names of the datasets available to the user.
         """
 
         code = agent.context.get_code("retrieve_dataset",{},)

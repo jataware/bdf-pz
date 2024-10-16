@@ -22,3 +22,8 @@ class Reference(pz.Schema):
     title = pz.Field(desc="The title of the paper being cited", required=True)
     first_author = pz.Field(desc="The author of the paper being cited", required=True)
     year = pz.Field(desc="The year in which the cited paper was published", required=True)
+
+import IPython
+formatter = IPython.get_ipython().display_formatter.formatters['text/plain']
+formatter.max_seq_length = 0
+print("Setup complete")
