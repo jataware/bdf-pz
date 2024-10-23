@@ -286,6 +286,51 @@ class BdfPzAgent(BeakerAgent):
 
             return output    
 
+
+    @tool 
+    async def override_dataset(self,
+                           agent: AgentRef,
+                           input_dataset:str,
+                           loop: LoopControllerRef) -> str:
+        """
+        The function is required after a workload has been executed, if the user needs to run a new workload with new converts or filters.
+        The effect of this function is to reset the working dataset to the input dataset.
+        This function deletes an existing dataset and sets the working dataset to a new input dataset.
+       
+        Args:
+            input_dataset (str): An existing object of type dataset to use for conversion.
+
+        Returns:
+            str: returns a new dataset corresponding to the converted input dataset.
+
+        """
+
+        code = agent.context.get_code(
+            "override_dataset",
+            {
+                "input_dataset": input_dataset,
+            },
+        )
+
+        if JSON_OUTPUT:
+            return json.dumps(
+                {
+                    "action": "code_cell",
+                    "language": "python3",
+                    "content": code.strip(),
+                }
+            )
+        else:
+            result = await agent.context.evaluate(
+                code,
+                parent_header={},
+            )
+            print(code)
+            output = result.get("return")
+
+            return output    
+
+
     @tool()
     async def set_input_source(self,
                                dataset: str,
