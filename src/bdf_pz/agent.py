@@ -334,22 +334,26 @@ class BdfPzAgent(BeakerAgent):
     @tool()
     async def set_input_source(self,
                                dataset: str,
+                               input_schema: str,
                                agent: AgentRef) -> str:
         """
         This function sets the input dataset for the agent to work with when using Palimpzest (pz). 
         The input source, also known as the source dataset, or the input dataset, is any dataset that the user will run any workload on.
+        If the user does not specify the input schema to use to load the sourec, you will need to create one that is appropriate for the request.
         This function should be used at the beginning of any workflow to set the input dataset for the agent to work with when using Palimpzest (pz). 
 
         Args:
             dataset (str): The name of the dataset to set as the input source.
-
+            input_schema (str): The schema to use to load the input source. If not specified, a schema will be generated based on the input source.
         Returns:
         Returns:
             str: returns the input source dataset as a palimpzest dataset called `dataset`.
         """
         
         code = agent.context.get_code(
-        "set_input_source", {"dataset": dataset})
+        "set_input_source", {"dataset": dataset,
+                             "input_schema": input_schema},
+        )
         
         if JSON_OUTPUT:
             return json.dumps(

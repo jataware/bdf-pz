@@ -1,3 +1,3 @@
-dataset = pz.Dataset("{{ dataset }}", schema=ScientificPaper)
+dataset = pz.Dataset("{{ dataset }}", schema=""{{initial_schema}}"")
 
 dataset
