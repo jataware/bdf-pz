@@ -338,7 +338,8 @@ class BdfPzAgent(BeakerAgent):
 
     @tool()
     async def set_input_dataset(
-        self, dataset: str, input_schema: str, agent: AgentRef
+        self, dataset: str, input_schema: str, agent: AgentRef,
+        loop: LoopControllerRef
     ) -> str:
         """
         This function sets the input dataset for the agent to work with when using Palimpzest (pz).
@@ -369,11 +370,12 @@ class BdfPzAgent(BeakerAgent):
             )
         else:
             result = await agent.context.evaluate(
-                code,
-                parent_header={},
+            code,
+            parent_header={},
             )
             output = result.get("return")
-
+            if output == '':
+                loop.set_state(loop.STOP_FAILURE)
             return output
 
     @tool()
