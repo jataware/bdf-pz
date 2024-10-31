@@ -1,5 +1,3 @@
-if "dataset" not in locals():
-    dataset = pz.Dataset("{{ input_dataset }}", schema=ScientificPaper)
 convert_schema = {{ schema }}
 
 cardinality_str = "{{cardinality}}"

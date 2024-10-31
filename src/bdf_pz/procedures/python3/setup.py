@@ -26,4 +26,25 @@ class Reference(pz.Schema):
 import IPython
 formatter = IPython.get_ipython().display_formatter.formatters['text/plain']
 formatter.max_seq_length = 0
+
+from palimpzest.corelib.schemas import File, Number, TextFile, RawJSONObject, PDFFile, ImageFile, EquationImage, PlotImage, URL, Download, WebPage, XLSFile, Table
+
+existing_schemas = {
+    "File": File,
+    "Number": Number,
+    "TextFile": TextFile,
+    "RawJSONObject": RawJSONObject,
+    "PDFFile": PDFFile,
+    "ImageFile": ImageFile,
+    "EquationImage": EquationImage,
+    "PlotImage": PlotImage,
+    "URL": URL,
+    "Download": Download,
+    "WebPage": WebPage,
+    "XLSFile": XLSFile,
+    "Table": Table,
+    "ScientificPaper": ScientificPaper,
+    "Reference": Reference
+}
+
 print("Setup complete")
