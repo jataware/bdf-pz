@@ -15,7 +15,7 @@ import palimpzestLogo from '../assets/palimpzest-cropped.png';
             @session-status-changed="statusChanged"
             v-keybindings="sessionKeybindings"
             :context="{
-                slug: 'bdf_pz',
+                slug: 'bdf-pz',
                 payload: {}
             }"
         >

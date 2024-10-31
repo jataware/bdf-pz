@@ -18,7 +18,7 @@ import palimpzestLogo from '../assets/palimpzest-cropped.png';
         @session-status-changed="statusChanged"
         @open-file="loadNotebook"
         :context="{
-            slug: 'bdf_pz',
+            slug: 'bdf-pz',
             payload: {}
         }"
     >
