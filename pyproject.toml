@@ -25,8 +25,9 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dependencies = [
-  "beaker_kernel~=1.6.8",
+  "beaker_kernel>=1.7.1",
   "pandas",
+  "prettytable",
 ]
 
 [project.urls]

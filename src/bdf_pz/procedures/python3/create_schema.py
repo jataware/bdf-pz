@@ -23,5 +23,5 @@ new_class = type(class_name, (pz.Schema,), attributes)
 
 # Assign the dynamically created class to a variable using globals()
 globals()[class_name] = new_class
-
+existing_schemas[class_name] = new_class
 new_class
