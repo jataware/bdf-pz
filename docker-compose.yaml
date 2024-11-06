@@ -1,6 +1,8 @@
----
+name: bdf-pz
+networks:
+  beaker:
+    name: bdf-pz_beaker
 
-version: '3'
 services:
   jupyter:
     build:
@@ -11,6 +13,7 @@ services:
     environment:
       - DEBUG=1
       - JUPYTER_SERVER=http://jupyter:8888
+      - JUPYTER_TOKEN=89f73481102c46c0bc13b2998f9a4fce
       - ENABLE_USER_PROMPT=true
       - ENABLE_CHECKPOINTS=true  
       - PYTHONPATH=/jupyter
@@ -18,3 +21,8 @@ services:
       - .env      
     working_dir: /jupyter
     command: ["beaker", "dev", "watch", "--ip", "0.0.0.0"]
+    networks:
+      - beaker
+
+include:
+  - custom-ui/docker-compose.yaml

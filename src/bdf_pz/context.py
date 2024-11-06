@@ -23,7 +23,7 @@ class BdfPzContext(BeakerContext):
 
     def __init__(self, beaker_kernel: "BeakerKernel", config: Dict[str, Any]):
         super().__init__(beaker_kernel, BdfPzAgent, config)
-
+        
     async def setup(self, context_info=None, parent_header=None):
         """
         This runs on setup and invokes the `procedures/python3/setup.py` script to 

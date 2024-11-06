@@ -1,0 +1,36 @@
+# BUG NOTE: sequence of actions:
+# 1. Run the first query in the 'default' context
+# 2. Switch to the 'palimpzest' context
+# 3. Reset the kernel
+# 4. Rerun the first query, the agent is not able to pick the correct tools.
+# Is this intended behavior? It would work if 2. and 3. are swapped.
+
+# Run the following command once to set the input dataset:
+# pz reg --path testdata/bdf-demo --name bdf-demo
+{
+  "User": "I have a dataset of scientific papers and I want to only consider the ones published from 2021 onwards. And from these papers, extract the title and authors."
+} 
+# The agent parses a filter, but it stops after the first operation.
+
+{
+  "User": "Is that it?"
+  }
+# This prompts the agent to run the tools to convert and run the workload.
+
+# The output of the execution is the following. It misses 2 papers but the 3 included are correct.
+# authors title
+# 0,Zhengke Li, ATR prevents Ca2+ overload-induced necrotic ce...
+# 1,Carolina Marques, NF1 regulates mesenchymal glioblastoma plastic...
+# 2,A list of authors..., Single-nuclei and bulk-tissue gene-expression ...
+
+{
+  "User": "What if I want to also include the papers from 2020?"
+}
+# The agent parses this as a filter on the year, but the result will be incorrect because of two reasons:
+# 1. The filter is applied on the converted dataset that only includes author/title of publication
+# 2. The flter is applied on the already filtered dataset, so the result will not include any more papers.
+
+{
+  "User": "Is that it?"
+}
+# This fires another convert and execute cycle whic ultimately leads to an empty result.

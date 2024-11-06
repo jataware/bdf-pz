@@ -22,3 +22,29 @@ class Reference(pz.Schema):
     title = pz.Field(desc="The title of the paper being cited", required=True)
     first_author = pz.Field(desc="The author of the paper being cited", required=True)
     year = pz.Field(desc="The year in which the cited paper was published", required=True)
+
+import IPython
+formatter = IPython.get_ipython().display_formatter.formatters['text/plain']
+formatter.max_seq_length = 0
+
+from palimpzest.corelib.schemas import File, Number, TextFile, RawJSONObject, PDFFile, ImageFile, EquationImage, PlotImage, URL, Download, WebPage, XLSFile, Table
+
+existing_schemas = {
+    "File": File,
+    "Number": Number,
+    "TextFile": TextFile,
+    "RawJSONObject": RawJSONObject,
+    "PDFFile": PDFFile,
+    "ImageFile": ImageFile,
+    "EquationImage": EquationImage,
+    "PlotImage": PlotImage,
+    "URL": URL,
+    "Download": Download,
+    "WebPage": WebPage,
+    "XLSFile": XLSFile,
+    "Table": Table,
+    "ScientificPaper": ScientificPaper,
+    "Reference": Reference
+}
+
+print("Setup complete")
