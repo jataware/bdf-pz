@@ -103,7 +103,7 @@ import Button from "primevue/button";
 import { defineProps, inject, nextTick, ref, computed, toRaw, watch } from 'vue';
 import { DecapodeRenderer, JSONRenderer, LatexRenderer, wrapJupyterRenderer, BeakerRenderOutput  } from 'beaker-vue/src/renderers';
 
-import BaseInterface from 'beaker-vue/src/pages/BaseInterface.vue';
+import BaseInterface from './BaseInterface.vue';
 import BeakerAgentQuery from 'beaker-vue/src/components/agent/BeakerAgentQuery.vue';
 import InfoPanel from 'beaker-vue/src/components/panels/InfoPanel.vue';
 import FilePanel from 'beaker-vue/src/components/panels/FilePanel.vue';

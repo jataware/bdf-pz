@@ -17,8 +17,8 @@ services:
       - ENABLE_USER_PROMPT=true
       - ENABLE_CHECKPOINTS=true  
       - PYTHONPATH=/jupyter
-    env_file:
-      - .env      
+    # env_file:
+    #   - .env      
     working_dir: /jupyter
     command: ["beaker", "dev", "watch", "--ip", "0.0.0.0"]
     networks:
