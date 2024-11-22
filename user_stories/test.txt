@@ -3,4 +3,4 @@ Create a schema to extract authors.
 What datasets are available?
 Consider the bdf-demo dataset. This is a dataset of scientific papers. Extract all authors of papers about brain cancer.
 
-Consider the images-tiny dataset. This is a dataset of images. Extract all images of cats.
+Consider the images-tiny dataset. This is a dataset of image files. Extract all images of cats.

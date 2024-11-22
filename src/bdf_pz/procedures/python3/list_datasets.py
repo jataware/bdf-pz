@@ -1,7 +1,7 @@
 import pandas as pd
 from prettytable import PrettyTable
 
-ds = pz.DataDirectory().listRegisteredDatasets()
+ds = pz.DataDirectory().list_registered_datasets()
 
 # construct table for printing
 table = [["Name", "Type", "Path"]]

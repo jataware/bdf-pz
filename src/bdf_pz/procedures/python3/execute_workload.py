@@ -21,17 +21,17 @@ iterable  =  pz.Execute(output,
 results = []
 statistics = []
 
-for idx, (extraction, plan, stats) in enumerate(iterable):
+for idx, (record, plan, stats) in enumerate(iterable):
     
     record_time = time.time()
     statistics.append(stats)
 
-    for ex in extraction:
-        ex_obj = {}
-        for name in output.schema.fieldNames():
-            ex_obj[name] = ex.__getattribute__(name)
-        print(ex_obj)
-        results.append(ex_obj)
+    for dr in record:
+        data_obj = {}
+        for name in output.schema.field_names():
+            data_obj[name] = dr.__getattr__(name)
+        data_obj['source'] = dr.filename
+        results.append(data_obj)
 
 results_df = pd.DataFrame(results)
 results_df
