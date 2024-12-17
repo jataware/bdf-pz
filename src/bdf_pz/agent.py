@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING, Dict, List, Tuple, Type
 import pandas as pd
 from archytas.tool_utils import AgentRef, LoopControllerRef, ReactContextRef, tool
 from beaker_kernel.lib import BeakerAgent
+from palimpzest.corelib.schemas import Schema
 
 if TYPE_CHECKING:
     from beaker_kernel.kernel import BeakerKernel
@@ -379,7 +380,7 @@ class BdfPzAgent(BeakerAgent):
             return output
 
     @tool()
-    async def pick_schema(self, schema_name: str, agent: AgentRef) -> object:
+    async def pick_schema(self, schema_name: str, agent: AgentRef) -> Schema:  # noqa: F821
         """
         This function picks a given schema class given its name.
         If the schema is not found, the function returns None. Provide a message to the user in this case, and proceed with creating a new schema with the given name.
