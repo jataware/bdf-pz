@@ -6,6 +6,7 @@ RUN apt update && apt install -y lsof
 
 # Install Python requirements
 RUN pip install --upgrade --no-cache-dir hatch pip
+RUN pip install cloudpickle
 
 COPY beaker_kernel-1.7.3a0-py3-none-any.whl /jupyter/
 COPY --chown=1000:1000 . /jupyter/
