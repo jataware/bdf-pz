@@ -7,7 +7,10 @@ RUN apt update && apt install -y lsof
 # Install Python requirements
 RUN pip install --upgrade --no-cache-dir hatch pip
 
+RUN pip install cloudpickle
 RUN pip install git+https://github.com/mitdbg/palimpzest.git@main
+RUN python -c "import palimpzest"
+
 
 COPY --chown=1000:1000 src/ /jupyter/src
 COPY --chown=1000:1000 pyproject.toml /jupyter/pyproject.toml

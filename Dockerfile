@@ -19,6 +19,7 @@ RUN pip install /jupyter/beaker_kernel-1.7.3a0-py3-none-any.whl
 USER jupyter
 WORKDIR /jupyter
 
+RUN pip install cloudpickle
 RUN pip install git+https://github.com/mitdbg/palimpzest.git@main
 RUN python -c "import palimpzest"
 
