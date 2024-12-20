@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 src/bdf_pz/__pycache__
+*.pyc
 # C extensions
 *.so
 
