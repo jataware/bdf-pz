@@ -163,3 +163,12 @@ cython_debug/
 #.idea/
 
 node_modules/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+.pyc
+
+# Beaker config
+.beaker.conf
