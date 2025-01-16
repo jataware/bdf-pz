@@ -3,6 +3,8 @@ import pandas as pd
 import time
 import os
 from palimpzest.corelib.schemas import File, Number, TextFile, RawJSONObject, PDFFile, ImageFile, EquationImage, PlotImage, URL, Download, WebPage, XLSFile, Table
+
+
 # set OPENAI_API_KEY environment variable based on OPENAI_API_KEY
 
 class ScientificPaper(pz.PDFFile):
@@ -72,8 +74,8 @@ except KeyError:
 
 
 dataset = pz.Dataset(source="bdf-demo", schema=schema)
-condition = "The paper is about brain cancer."
-dataset = dataset.filter(condition)
+# condition = "The paper is about brain cancer."
+# dataset = dataset.filter(condition)
 convert_schema = Author
 cardinality_str = "one_to_many"
 cardinality = pz.Cardinality.ONE_TO_MANY if cardinality_str == "one_to_many" else pz.Cardinality.ONE_TO_ONE
@@ -83,37 +85,46 @@ if "dataset" not in locals():
     output = "bdf-demo"
 else:
     output = dataset
+print("Output dataset:")
+print(dataset)
 
-policy_method = "min_cost"
+print(output.schema.field_names())
 
-# optimization block
-engine = pz.StreamingSequentialExecution
+policy_method =  "min_cost"
+engine = pz.NoSentinelPipelinedSingleThreadExecution
+
+# Select a policy
 if policy_method == "min_cost":
     policy = pz.MinCost()
 elif policy_method == "max_quality":
     policy = pz.MaxQuality()
-iterable  =  pz.Execute(output,
+else:
+    raise ValueError(f"Unknown policy: {policy_method}")
+
+records, execution_stats = pz.Execute(output,
                         policy = policy,
                         nocache=True,
-                        allow_code_synth=False,
-                        allow_token_reduction=False,
+                        allow_code_synth= False,
+                        allow_token_reduction = False,
                         execution_engine=engine)
 
 results = []
 statistics = []
 
-for idx, (record, plan, stats) in enumerate(iterable):
-    
-    record_time = time.time()
-    statistics.append(stats)
+print("Iterating over the results:")
+print(len(records))
 
-    for dr in record:
-        data_obj = {}
-        for name in output.schema.field_names():
-            data_obj[name] = dr.__getattr__(name)
-        data_obj['source'] = dr.filename
-        results.append(data_obj)
+print(output.schema.field_names())
+
+for record in records:
+    print("Record:")
+    data_obj = {}
+    for name in output.schema.field_names():
+        print(f"Getting attribute: {name}")
+        data_obj[name] = record.__getattr__(name)
+    data_obj['source'] = record.filename
+    results.append(data_obj)
+    # results.append(record.as_dict())
 
 results_df = pd.DataFrame(results)
-
 print(results_df)

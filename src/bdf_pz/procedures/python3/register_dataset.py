@@ -3,11 +3,11 @@ path = "{{ path }}".strip()
 name = "{{ name }}".strip()
 
 # register dataset
-if os.path.isfile(path):     
-    pz.DataDirectory().registerLocalFile(os.path.abspath(path), name)
+if os.path.isfile(path):
+    pz.DataDirectory().register_local_file(os.path.abspath(path), name)
 
 elif os.path.isdir(path):
-    pz.DataDirectory().registerLocalDirectory(os.path.abspath(path), name)
+    pz.DataDirectory().register_local_directory(os.path.abspath(path), name)
 
 else:
     raise InvalidCommandException(

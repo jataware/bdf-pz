@@ -6,12 +6,12 @@ else:
 policy_method = "{{ policy_method }}"
 
 # optimization block
-engine = pz.StreamingSequentialExecution
+engine = pz.NoSentinelPipelinedSingleThreadExecution
 if policy_method == "min_cost":
     policy = pz.MinCost()
 elif policy_method == "max_quality":
     policy = pz.MaxQuality()
-iterable  =  pz.Execute(output,
+records, execution_stats  =  pz.Execute(output,
                         policy = policy,
                         nocache=True,
                         allow_code_synth={{ allow_code_synth }},
@@ -21,17 +21,13 @@ iterable  =  pz.Execute(output,
 results = []
 statistics = []
 
-for idx, (record, plan, stats) in enumerate(iterable):
-    
-    record_time = time.time()
-    statistics.append(stats)
-
-    for dr in record:
-        data_obj = {}
-        for name in output.schema.field_names():
-            data_obj[name] = dr.__getattr__(name)
-        data_obj['source'] = dr.filename
-        results.append(data_obj)
+for record in records:
+    data_obj = {}
+    for name in output.schema.field_names():
+        data_obj[name] = record.__getattr__(name)
+    data_obj['source'] = record.filename
+    results.append(data_obj)
+    # results.append(record.as_dict())
 
 results_df = pd.DataFrame(results)
 results_df

@@ -4,3 +4,7 @@ What datasets are available?
 Consider the bdf-demo dataset. This is a dataset of scientific papers. Extract all authors of papers about brain cancer.
 
 Consider the images-tiny dataset. This is a dataset of image files. Extract all images of cats.
+
+
+
+please register dataset with name bdf-demo under folder /jupyter/testdata/bdf-usecase3-tiny
