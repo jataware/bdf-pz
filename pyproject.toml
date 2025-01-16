@@ -28,6 +28,8 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dependencies = [
+  "cloudpickle",
+  "palimpzest @ git+https://github.com/mitdbg/palimpzest@bdf-demo",
   "beaker_kernel~=1.8.8",
   "pandas",
   "prettytable",
