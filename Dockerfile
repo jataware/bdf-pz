@@ -1,3 +1,10 @@
+FROM node:20 AS nodebuilder
+
+COPY ./custom-ui /custom-ui
+WORKDIR /custom-ui
+RUN npm ci && npm run build
+
+
 FROM python:3.11.5
 RUN useradd -m jupyter
 EXPOSE 8888
@@ -15,6 +22,9 @@ RUN pip install --no-build-isolation cloudpickle cython editables
 RUN pip install --no-build-isolation git+https://github.com/mitdbg/palimpzest.git@6ab5b5bcfdc36b3b51d136b41ab8ce95d7cd5005
 RUN python -c "import palimpzest"
 RUN pip install --no-build-isolation -e /jupyter
+
+RUN rm -r /usr/local/lib/python3.11/site-packages/beaker_kernel/server/ui/*
+COPY --from=nodebuilder /custom-ui/dist/ /usr/local/lib/python3.11/site-packages/beaker_kernel/server/ui/
 
 # Switch to non-root user. It is crucial for security reasons to not run jupyter as root user!
 USER jupyter
