@@ -19,7 +19,7 @@ RUN chown -R 1000:1000 /jupyter
 RUN pip install --no-build-isolation beaker-kernel~=1.8.8
 
 RUN pip install --no-build-isolation cloudpickle cython editables
-RUN pip install --no-build-isolation git+https://github.com/mitdbg/palimpzest.git@6ab5b5bcfdc36b3b51d136b41ab8ce95d7cd5005
+RUN pip install --no-build-isolation git+https://github.com/mitdbg/palimpzest.git@e64e236b5ee88327c351661f3f122bd8de7dda2c
 RUN python -c "import palimpzest"
 RUN pip install --no-build-isolation -e /jupyter
 

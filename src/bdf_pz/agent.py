@@ -464,7 +464,7 @@ class BdfPzAgent(BeakerAgent):
 
         Args:
             output_dataset (str): An output dataset on which to run the workload.
-            policy_method (str): Either "min_cost" or "max_quality". Defaults to "min_cost".
+            policy_method (str): Either "min_cost" or "max_quality". Defaults to "max_quality".
             allow_code_synth (str): Whether to allow code synthesis or not. Defaults to "False".
             allow_token_reduction (str): Whether to allow token reduction or not. Defaults to "False".
 
