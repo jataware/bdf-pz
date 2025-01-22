@@ -1,10 +1,24 @@
 What schemas are available in the system?
+
 Create a schema to extract authors.
+
+What schemas are available in the system?
+
+
 What datasets are available?
-Consider the bdf-demo dataset. This is a dataset of scientific papers. Extract all authors of papers about brain cancer.
-
-Consider the images-tiny dataset. This is a dataset of image files. Extract all images of cats.
-
-
 
 please register dataset with name bdf-demo under folder /jupyter/testdata/bdf-usecase3-tiny
+
+What datasets are available?
+
+Consider the bdf-demo dataset. This is a dataset of scientific papers. Extract all authors of papers about cancer.
+
+
+
+
+Please first load the bdf-demo dataset as pdf files. Extract all papers about brain cancer. Then convert the filtered dataset into Author schema before you execute the workload
+
+
+% Consider the images-tiny dataset. This is a dataset of image files. Extract all images of cats.
+
+
