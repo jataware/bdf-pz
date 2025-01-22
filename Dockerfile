@@ -23,6 +23,7 @@ RUN pip install --no-build-isolation git+https://github.com/mitdbg/palimpzest.gi
 RUN python -c "import palimpzest"
 RUN pip install --no-build-isolation -e /jupyter
 
+RUN rm -r /usr/local/lib/python3.11/site-packages/beaker_kernel/server/ui/*
 COPY --from=nodebuilder /custom-ui/dist/ /usr/local/lib/python3.11/site-packages/beaker_kernel/server/ui/
 
 # Switch to non-root user. It is crucial for security reasons to not run jupyter as root user!
