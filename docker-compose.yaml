@@ -15,14 +15,16 @@ services:
       - JUPYTER_SERVER=http://jupyter:8888
       - JUPYTER_TOKEN=89f73481102c46c0bc13b2998f9a4fce
       - ENABLE_USER_PROMPT=true
-      - ENABLE_CHECKPOINTS=true  
+      - ENABLE_CHECKPOINTS=true
       - PYTHONPATH=/jupyter
     # env_file:
-    #   - .env      
+    #   - .env
     working_dir: /jupyter
+    volumes:
+      - ./.beaker.conf:/jupyter/.beaker.conf
     command: ["beaker", "dev", "watch", "--ip", "0.0.0.0"]
     networks:
       - beaker
 
-include:
-  - custom-ui/docker-compose.yaml
+# include:
+#   - custom-ui/docker-compose.yaml

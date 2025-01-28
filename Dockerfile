@@ -1,3 +1,10 @@
+FROM node:20 AS nodebuilder
+
+COPY ./custom-ui /custom-ui
+WORKDIR /custom-ui
+RUN npm ci && npm run build
+
+
 FROM python:3.11.5
 RUN useradd -m jupyter
 EXPOSE 8888
@@ -8,19 +15,21 @@ RUN apt update && apt install -y lsof
 RUN pip install --upgrade --no-cache-dir hatch pip
 RUN pip install cloudpickle
 
-COPY beaker_kernel-1.7.3a0-py3-none-any.whl /jupyter/
 COPY --chown=1000:1000 . /jupyter/
 RUN chown -R 1000:1000 /jupyter
-RUN pip install -e /jupyter
-RUN pip uninstall beaker_kernel -y
-RUN pip install /jupyter/beaker_kernel-1.7.3a0-py3-none-any.whl
+RUN pip install --no-build-isolation beaker-kernel~=1.8.8
+
+RUN pip install --no-build-isolation cloudpickle cython editables
+RUN pip install --no-build-isolation git+https://github.com/mitdbg/palimpzest.git@e64e236b5ee88327c351661f3f122bd8de7dda2c
+RUN python -c "import palimpzest"
+RUN pip install --no-build-isolation -e /jupyter
+
+RUN rm -r /usr/local/lib/python3.11/site-packages/beaker_kernel/server/ui/*
+COPY --from=nodebuilder /custom-ui/dist/ /usr/local/lib/python3.11/site-packages/beaker_kernel/server/ui/
 
 # Switch to non-root user. It is crucial for security reasons to not run jupyter as root user!
 USER jupyter
 WORKDIR /jupyter
-
-RUN pip install git+https://github.com/mitdbg/palimpzest.git@main
-RUN python -c "import palimpzest"
 
 
 # Service
