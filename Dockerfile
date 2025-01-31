@@ -26,8 +26,9 @@ WORKDIR /jupyter
 ENV BEAKER_AGENT_USER=jupyter
 ENV BEAKER_SUBKERNEL_USER=user
 ENV BEAKER_RUN_PATH=/var/run/beaker
-ENV CONFIG_TYPE=session
 ENV BEAKER_APP=bdf_pz.app.PalimpzestApp
+
+#ENV CONFIG_TYPE=session
 
 
 # Service
