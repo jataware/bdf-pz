@@ -1,5 +1,6 @@
 FROM python:3.11.5
 RUN useradd -m jupyter
+RUN useradd -m user
 EXPOSE 8888
 
 RUN apt update && apt install -y lsof
@@ -17,6 +18,8 @@ RUN python -c "import palimpzest"
 RUN pip install --no-build-isolation -e /jupyter
 
 USER root
+RUN mkdir -m 777 /var/run/beaker
+
 WORKDIR /jupyter
 
 # Set default server env variables
@@ -24,6 +27,7 @@ ENV BEAKER_AGENT_USER=jupyter
 ENV BEAKER_SUBKERNEL_USER=user
 ENV BEAKER_RUN_PATH=/var/run/beaker
 ENV CONFIG_TYPE=session
+ENV BEAKER_APP=bdf_pz.app.PalimpzestApp
 
 
 # Service
