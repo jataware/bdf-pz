@@ -22,7 +22,7 @@ services:
     working_dir: /jupyter
     volumes:
       - ./.beaker.conf:/jupyter/.beaker.conf
-    command: ["beaker", "dev", "watch", "--ip", "0.0.0.0"]
+    # command: ["beaker", "dev", "watch", "--ip", "0.0.0.0"]
     networks:
       - beaker
 
