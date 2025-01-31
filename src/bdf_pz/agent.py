@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Dict, List, Tuple, Type
 import pandas as pd
 from archytas.tool_utils import AgentRef, LoopControllerRef, ReactContextRef, tool
 from beaker_kernel.lib import BeakerAgent
-from palimpzest.corelib.schemas import Schema
+from palimpzest.core import Schema
 
 if TYPE_CHECKING:
     from beaker_kernel.kernel import BeakerKernel
@@ -26,9 +26,9 @@ class BdfPzAgent(BeakerAgent):
     async def auto_context(self):
         return """You are an assistent that is intended to assist users in using Palimpzest.
         Try to identify all of the steps needed, and all of the tools. Assume the user wants to do all of the steps at once.
-        
+
         If the user asks to extract something from a set of documents, you can use Palimpzest to do this. First, generate a schema for the extraction. Then, if necessary filter the data to only include the relevant documents. Next, convert the dataset to the schema that was generated. Finally, execute the workload to extract the information from the dataset.
-        You may need to use multiple tools to accomplish this, including the ability to register datasets, setting the input source, filtering datasets, 
+        You may need to use multiple tools to accomplish this, including the ability to register datasets, setting the input source, filtering datasets,
         convert datasets, generating schemas, and executing workloads.
 
         Make sure you understand all the steps needed to complete the task. Try to run all of the steps at once.
