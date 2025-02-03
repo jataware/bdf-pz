@@ -15,6 +15,9 @@ class PalimpzestApp(BeakerApp):
         },
         "notebook": {
             "title": "Palimpzest notebook",
+        },
+        "dev": {
+            "title": "Dev interface",
         }
     }
     default_context = Context(
