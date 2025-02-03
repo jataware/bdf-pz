@@ -1,6 +1,6 @@
 <template>
     <BaseInterface
-        title="Palimpzest Chat Interface"
+        title="PalimpChat Interface"
         ref="beakerInterfaceRef"
         :header-nav="headerNav"
         :connectionSettings="props.config"

@@ -502,3 +502,40 @@ class BdfPzAgent(BeakerAgent):
             output = result.get("return")
 
             return output
+
+    @tool()
+    async def print_statistics(
+        self,
+        agent: AgentRef,) -> str:
+        """
+        This function shows the runtime statistics after executing a workload.
+        The function can be used to check the total cost and total runtime of the pipeline that was run.
+        If necessary, before showing the statistics, the workload has to be executed.
+
+        Returns:
+            str: returns the statistics objects as it is produced by the execute workflow tool.
+
+        You should show the user the result after this function runs.
+
+        """
+
+        code = agent.context.get_code(
+            "print_statistics",
+            {},
+        )
+
+        if JSON_OUTPUT:
+            return json.dumps(
+                {
+                    "action": "code_cell",
+                    "language": "python3",
+                    "content": code.strip(),
+                }
+            )
+        else:
+            result = await agent.context.evaluate(
+                code,
+                parent_header={},
+            )
+            output = result.get("return")
+            return output
