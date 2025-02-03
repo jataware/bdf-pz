@@ -10,7 +10,7 @@ RUN pip install --upgrade --no-cache-dir hatch pip
 
 COPY --chown=1000:1000 . /jupyter/
 RUN chown -R 1000:1000 /jupyter
-RUN pip install --no-build-isolation /jupyter/beaker_kernel-1.9.0a1-py3-none-any.whl
+RUN pip install --no-build-isolation /jupyter/beaker_kernel-1.9.0a2-py3-none-any.whl
 
 RUN pip install --no-build-isolation cloudpickle cython editables
 RUN pip install --no-build-isolation git+https://github.com/mitdbg/palimpzest.git@main
