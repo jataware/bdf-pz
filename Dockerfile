@@ -13,7 +13,7 @@ RUN chown -R 1000:1000 /jupyter
 RUN pip install --no-build-isolation /jupyter/beaker_kernel-1.9.0a2-py3-none-any.whl
 
 RUN pip install --no-build-isolation cloudpickle cython editables
-RUN pip install --no-build-isolation git+https://github.com/mitdbg/palimpzest.git@main
+RUN pip install --no-build-isolation git+https://github.com/mitdbg/palimpzest.git@e64e236b5ee88327c351661f3f122bd8de7dda2c
 RUN python -c "import palimpzest"
 RUN pip install --no-build-isolation -e /jupyter
 
@@ -27,8 +27,6 @@ ENV BEAKER_AGENT_USER=jupyter
 ENV BEAKER_SUBKERNEL_USER=user
 ENV BEAKER_RUN_PATH=/var/run/beaker
 ENV BEAKER_APP=bdf_pz.app.PalimpzestApp
-
-#ENV CONFIG_TYPE=session
 
 
 # Service
