@@ -14,6 +14,7 @@ if TYPE_CHECKING:
 import json
 
 JSON_OUTPUT = False
+PRINT_OUTPUT = True
 
 
 class BdfPzAgent(BeakerAgent):
@@ -69,6 +70,8 @@ class BdfPzAgent(BeakerAgent):
         code = agent.context.get_code(
             "unregister_dataset", {"dataset_name": dataset_name}
         )
+        if PRINT_OUTPUT:
+            print(code)
         response = await agent.context.evaluate(code)
         return response["return"]
 
@@ -82,6 +85,8 @@ class BdfPzAgent(BeakerAgent):
         """
 
         code = agent.context.get_code("list_datasets", {})
+        if PRINT_OUTPUT:
+            print(code)
 
         if JSON_OUTPUT:
             return json.dumps(
@@ -118,6 +123,8 @@ class BdfPzAgent(BeakerAgent):
             "retrieve_dataset",
             {"dataset_path": dataset_path},
         )
+        if PRINT_OUTPUT:
+            print(code)
 
         if JSON_OUTPUT:
             return json.dumps(
@@ -140,7 +147,7 @@ class BdfPzAgent(BeakerAgent):
         return ""
 
     @tool()
-    async def generate_extraction_schema(
+    async def create_schema(
         self,
         schema_name: str,
         schema_description: str,
@@ -150,10 +157,11 @@ class BdfPzAgent(BeakerAgent):
         agent: AgentRef,
     ) -> str:
         """
-        This function takes in a set of fields to be used to generate an extraction schema. This should be used when the user is interested in generating a new type of extraction schema. For example, let's say the user is interested
-        in extracting parameter values from a set of scientific papers. The user can define the fields of the schema to be used for the extraction.
-        In this case the schema name might be `Parameter` and the field information is passed in via three lists which must
-        be constructed in proper order. For example, for parameter extractions the fields may be `name`, `value`, `unit`, `source`, etc.
+        This function takes in a set of fields to be used to generate an extraction schema. 
+        Typically it is called when users want to extract some piece of information from a set of documents.
+        After the schema is created, the input dataset should be converted to the new schema.
+        This should be used when the user is interested in generating a new type of extraction schema. For example, let's say the user is interested in extracting parameter values from a set of scientific papers. The user can define the fields of the schema to be used for the extraction.
+        In this case the schema name might be `Parameter` and the field information is passed in via three lists which must be constructed in proper order. For example, for parameter extractions the fields may be `name`, `value`, `unit`, `source`, etc.
         You should provide a description for each field as well as whether the field is required or not in the same order as you provide the field names. Field names should not have spaces or special characters, but can have underscores.
 
         Args:
@@ -177,6 +185,8 @@ class BdfPzAgent(BeakerAgent):
                 "field_required": field_required,
             },
         )
+        if PRINT_OUTPUT:
+            print(code)
 
         if JSON_OUTPUT:
             return json.dumps(
@@ -222,6 +232,8 @@ class BdfPzAgent(BeakerAgent):
                 "filter_expression": filter_expression,
             },
         )
+        if PRINT_OUTPUT:
+            print(code)
 
         if JSON_OUTPUT:
             return json.dumps(
@@ -253,7 +265,7 @@ class BdfPzAgent(BeakerAgent):
         """
         This function converts an input dataset to a new output dataset with a different schema.
         The function can be used for example to extract information from a collection of input documents.
-        The function is typically needed to apply a generated schema to an existing dataset, before executing a workload.
+        The function is typically needed before executing a workload, to apply a generated schema to an existing dataset.
         If multiple objects of the new schema can be extracted from a single object of the input dataset, the cardinality should be set to "one_to_many". If only one object of the new schema can be extracted from a single object of the input dataset, the cardinality should be set to "one_to_one".
         For example if a user wants to extract the titles for a dataset of scientific papers, the schema might be a TitleSchema.
 
@@ -276,6 +288,8 @@ class BdfPzAgent(BeakerAgent):
                 "cardinality": cardinality,
             },
         )
+        if PRINT_OUTPUT:
+            print(code)
 
         if JSON_OUTPUT:
             return json.dumps(
@@ -319,6 +333,8 @@ class BdfPzAgent(BeakerAgent):
             },
         )
 
+        if PRINT_OUTPUT:
+            print(code)
         if JSON_OUTPUT:
             return json.dumps(
                 {
@@ -360,6 +376,8 @@ class BdfPzAgent(BeakerAgent):
             "set_input_dataset",
             {"dataset": dataset, "input_schema": input_schema},
         )
+        if PRINT_OUTPUT:
+            print(code)
 
         if JSON_OUTPUT:
             return json.dumps(
@@ -395,6 +413,8 @@ class BdfPzAgent(BeakerAgent):
             {"schema_name": schema_name},
         )
 
+        if PRINT_OUTPUT:
+            print(code)
         if JSON_OUTPUT:
             return json.dumps(
                 {
@@ -422,6 +442,8 @@ class BdfPzAgent(BeakerAgent):
         """
 
         code = agent.context.get_code("list_schemas", {})
+        if PRINT_OUTPUT:
+            print(code)
 
         if JSON_OUTPUT:
             return json.dumps(
@@ -484,6 +506,8 @@ class BdfPzAgent(BeakerAgent):
                 "allow_token_reduction": allow_token_reduction,
             },
         )
+        if PRINT_OUTPUT:
+            print(code)
 
         if JSON_OUTPUT:
             return json.dumps(
