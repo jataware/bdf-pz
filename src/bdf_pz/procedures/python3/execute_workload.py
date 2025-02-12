@@ -16,6 +16,7 @@ records, execution_stats  =  pz.Execute(output,
                         nocache=True,
                         allow_code_synth={{ allow_code_synth }},
                         allow_token_reduction={{ allow_token_reduction }},
+                        allow_mixtures=False,
                         execution_engine=engine)
 
 results = []

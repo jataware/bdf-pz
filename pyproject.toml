@@ -29,7 +29,7 @@ classifiers = [
 ]
 dependencies = [
   "cloudpickle",
-  "palimpzest @ git+https://github.com/mitdbg/palimpzest@bdf-demo",
+  "palimpzest @ git+https://github.com/mitdbg/palimpzest.git@e64e236b5ee88327c351661f3f122bd8de7dda2c",
   "beaker_kernel~=1.8.8",
   "pandas",
   "prettytable",
