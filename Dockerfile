@@ -9,11 +9,6 @@ RUN apt update && apt install -y lsof
 # Install Python requirements
 RUN pip install --upgrade --no-cache-dir hatch pip
 
-# Changes for testing in-development version of Beaker. Should be removed before merge.
-COPY --chown=1000:1000 beaker_kernel-1.9.0a2-py3-none-any.whl /jupyter/
-RUN pip install --no-build-isolation /jupyter/beaker_kernel-1.9.0a2-py3-none-any.whl
-# End changes
-
 RUN pip install --no-build-isolation cloudpickle cython editables
 RUN pip install --no-build-isolation palimpzest
 RUN python -c "import palimpzest"
