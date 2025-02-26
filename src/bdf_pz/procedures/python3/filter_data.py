@@ -1,5 +1,5 @@
 condition = "{{ filter_expression }}"
 
-dataset = dataset.filter(condition)
+dataset = dataset.sem_filter(condition)
 
 dataset

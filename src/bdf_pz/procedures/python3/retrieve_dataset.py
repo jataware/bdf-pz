@@ -1,4 +1,6 @@
 import os
-files = os.listdir("{{ dataset_path }}")
+
+dataset_path = os.path.join(DATA_PATH, "{{ dataset_name }}")
+files = os.listdir(dataset_path)
 
 files
