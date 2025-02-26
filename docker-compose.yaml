@@ -17,16 +17,11 @@ services:
       - ENABLE_USER_PROMPT=true
       - ENABLE_CHECKPOINTS=true
       - PYTHONPATH=/jupyter
-    # env_file:
-    #   - .env
     working_dir: /jupyter
     volumes:
       - ./.beaker.conf:/jupyter/.beaker.conf
       - ./testdata/:/jupyter/testdata/
       - ./src/bdf_pz:/jupyter/src/bdf_pz
-    command: ["beaker", "dev", "watch", "--ip", "0.0.0.0"]
     networks:
       - beaker
 
-# include:
-#   - custom-ui/docker-compose.yaml

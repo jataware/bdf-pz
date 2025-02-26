@@ -2,6 +2,7 @@ try:
     del dataset
 except NameError:
     pass
-dataset = pz.Dataset("{{ input_dataset }}", schema="{{input_schema}}")
+dataset_path = registered_datasets["{{ dataset_name }}"]
+dataset = pz.Dataset(dataset_path)
 
 dataset

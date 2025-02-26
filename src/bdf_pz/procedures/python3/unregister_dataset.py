@@ -1,1 +1,1 @@
-pz.DataDirectory().rm_registered_dataset("{{ dataset_name }}")
+del registered_datasets["{{ dataset_name }}"]

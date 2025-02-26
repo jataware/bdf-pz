@@ -4,11 +4,8 @@ path = "{{ path }}".strip()
 name = "{{ name }}".strip()
 
 # register dataset
-if os.path.isfile(path):
-    pz.DataDirectory().register_local_file(os.path.abspath(path), name)
-
-elif os.path.isdir(path):
-    pz.DataDirectory().register_local_directory(os.path.abspath(path), name)
+if os.path.exists(path):
+    registered_datasets[name] = path
 
 else:
     raise Exception(
