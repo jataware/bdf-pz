@@ -1,0 +1,21 @@
+What datasets are available in the system? 
+
+Please add the sigmod-demo dataset from the folder testdata/sigmod-demo.
+
+Use sigmod-demo as the input dataset.
+
+Please add the sigmod-tiny dataset from the folder testdata/sigmod-tiny.
+Use sigmod-tiny as the input dataset.
+
+What files does the dataset contain?
+
+From this dataset, I only want papers about colorectal cancer.
+
+From these papers, extract datasets of clinical data, with their name, a short description of their content, and their public URL.
+Only consider data with a publicly available URL.
+
+Convert the dataset to the schema you generated.
+
+Extract the clinical data from the papers.
+
+Show me the execution statistics of the workload.

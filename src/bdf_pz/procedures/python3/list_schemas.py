@@ -4,7 +4,7 @@ from prettytable import PrettyTable
 # construct table for printing
 table = [["Name", "Fields"]]
 for name, value in existing_schemas.items():
-    table.append([name, ",".join(value.field_names())])
+    table.append([name, ",".join(value.keys())])
 
 # print table of registered datasets
 t = PrettyTable(table[0])

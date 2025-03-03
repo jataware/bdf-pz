@@ -1,12 +1,15 @@
 import pandas as pd
 from prettytable import PrettyTable
-
-ds = pz.DataDirectory().list_registered_datasets()
+import os 
 
 # construct table for printing
-table = [["Name", "Type", "Path"]]
-for path, descriptor in ds:
-    table.append([path, descriptor[0], descriptor[1]])
+table = [["Name", "Path", "N. Files"]]
+for path, descriptor in registered_datasets.items():
+    try:
+        n_files = len(os.listdir(descriptor))
+    except:
+        n_files = "1"
+    table.append([path, descriptor[0], n_files])
 
 # print table of registered datasets
 t = PrettyTable(table[0])

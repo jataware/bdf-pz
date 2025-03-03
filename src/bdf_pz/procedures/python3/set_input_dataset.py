@@ -1,7 +1,4 @@
-try:
-    schema = existing_schemas["{{input_schema}}"]
-except KeyError:
-    raise ValueError(f"Schema '{{input_schema}}' not found in existing schemas!")
-dataset = pz.Dataset(source="{{ dataset }}", schema=schema)
+dataset_path = registered_datasets["{{ dataset_name }}"]
+dataset = pz.Dataset(source=dataset_path)
 
 dataset
