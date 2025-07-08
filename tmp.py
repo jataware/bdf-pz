@@ -30,7 +30,8 @@ import palimpzest as pz
 # except KeyError:
     # raise ValueError(f"Schema 'Author' not found in existing schemas!")
 dataset = pz.Dataset("testdata/bdf-demo")
-condition = "The paper is about brain cancer."
+dataset = pz.Dataset("testdata/sigmod-tiny")
+condition = "The paper is about genes and cancer."
 dataset = dataset.sem_filter(condition)
 convert_schema = schema_dicts
 cardinality_str = "one_to_many"
@@ -52,24 +53,13 @@ elif policy_method == "max_quality":
 
 config = pz.QueryProcessorConfig(
     policy=policy,
-    nocache=True,
+    cache=False,
     verbose=False,
-    processing_strategy="streaming",
-    execution_strategy="sequential",
-    optimizer_strategy="pareto",
-    allow_token_reduction=False,
     allow_code_synth=False,
 )
 
-iterable = output.run(config)
+results = output.run(config)
 
 statistics = []
-results = []
-for data_record_collection in iterable:
-    table = data_record_collection.data_records
-    stats = data_record_collection.plan_stats
-    record_time = time.time()
-    statistics.append(stats)
-    results.extend(table)
-
-results_df = pd.DataFrame(results)
+results_df = results.to_df()
+print(results_df)

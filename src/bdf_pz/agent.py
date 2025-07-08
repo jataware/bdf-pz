@@ -6,7 +6,6 @@ from typing import TYPE_CHECKING, Dict, List, Tuple, Type
 import pandas as pd
 from archytas.tool_utils import AgentRef, LoopControllerRef, ReactContextRef, tool
 from beaker_kernel.lib import BeakerAgent
-from palimpzest.core import Schema
 
 if TYPE_CHECKING:
     from beaker_kernel.kernel import BeakerKernel

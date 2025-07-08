@@ -1,0 +1,28 @@
+gpt-4o-2024-08-06
+#####
+PromptStrategy.COT_QA
+#####
+The text contents of the PDF mention a set of four critical differentially expressed genes (DEGs) that play a pivotal role in the development of colorectal cancer (CRC). These genes are listed as CXCL8, PSMC2, APP, and SLC20A1. The task is to identify the gene name mentioned in the text. Since the text explicitly lists these four genes, they are the gene names that should be included in the output.
+
+ANSWER:
+```json
+[
+  {
+    "gene_name": "CXCL8"
+  },
+  {
+    "gene_name": "PSMC2"
+  },
+  {
+    "gene_name": "APP"
+  },
+  {
+    "gene_name": "SLC20A1"
+  }
+]
+```
+---
+#####
+{'gene_name': <palimpzest.core.lib.fields.StringField object at 0x7ccbb863aad0>}
+#####
+list indices must be integers or slices, not str
