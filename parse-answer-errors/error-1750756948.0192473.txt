@@ -1,0 +1,21 @@
+gpt-4o-2024-08-06
+#####
+PromptStrategy.COT_QA
+#####
+The context provided is a detailed description of a scientific study on colon cancer, specifically focusing on proteogenomic analysis. The text mentions various aspects of the study, including the collection and analysis of tumor samples, the methodologies used, and the findings related to cancer biomarkers and therapeutic targets. The study is part of the Clinical Proteomic Tumor Analysis Consortium (CPTAC) and involves multiple institutions and researchers.
+
+The task is to generate a JSON object with the field "context" that provides context information regarding the gene mention. The text does not explicitly mention a specific gene, but it discusses the broader context of proteogenomic analysis in colon cancer, which involves the study of proteins and genes to identify biomarkers and therapeutic targets.
+
+ANSWER:
+```json
+[
+  {
+    "context": "The document is a scientific study on proteogenomic analysis of human colon cancer, revealing new therapeutic opportunities. It involves comparative proteomic and phosphoproteomic analysis of tumor and normal tissues, identifying cancer-associated proteins, phosphosites, biomarkers, drug targets, and cancer/testis antigens. The study is part of the Clinical Proteomic Tumor Analysis Consortium (CPTAC) and highlights the integration of proteogenomics in prioritizing genomically inferred targets and novel findings in cancer research."
+  }
+]
+```
+---
+#####
+{'context': <palimpzest.core.lib.fields.StringField object at 0x7c7aeff3e7d0>}
+#####
+list indices must be integers or slices, not str
