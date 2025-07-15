@@ -10,7 +10,12 @@ RUN apt update && apt install -y lsof
 RUN pip install --upgrade --no-cache-dir hatch pip
 RUN pip install cloudpickle
 
-RUN pip install --no-build-isolation cloudpickle cython editables
+# Changes for testing in-development version of Beaker. Should be removed before merge.
+COPY --chown=1000:1000 beaker_kernel-1.9.0a2-py3-none-any.whl /jupyter/
+RUN pip install --no-build-isolation /jupyter/beaker_kernel-1.9.0a2-py3-none-any.whl
+# End changes
+
+RUN pip install --no-build-isolation cloudpickle cython editables archytas==1.3.11 numpy==1.26.4
 RUN pip install --no-build-isolation palimpzest
 RUN python -c "import palimpzest"
 

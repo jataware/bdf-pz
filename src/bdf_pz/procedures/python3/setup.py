@@ -24,7 +24,7 @@ reference_schema = [
     {"name": "year", "type": int, "desc": "The year in which the cited paper was published."},
 ]
 
-DATA_PATH = "testdata/"
+DATA_PATH = "/jupyter/testdata/"
 # print("Setup complete")
 
 registered_datasets = {}
