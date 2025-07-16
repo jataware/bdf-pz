@@ -16,6 +16,7 @@ RUN python -c "import palimpzest"
 # Copy local package to image and install
 COPY --chown=1000:1000 . /jupyter/
 RUN chown -R 1000:1000 /jupyter
+RUN pip install --no-build-isolation beaker-kernel
 RUN pip install --no-build-isolation -e /jupyter
 
 # Set up for running beaker server
