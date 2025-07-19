@@ -3,19 +3,21 @@ if "dataset" not in locals():
 else:
     output = dataset
 
+assert isinstance(output, pz.Dataset), "Output should be a Dataset object"
+
 policy_method = "{{ policy_method }}"
 
 if policy_method == "min_cost":
     policy = pz.MinCost()
 elif policy_method == "max_quality":
-    policy = pz.MaxQuality()
+    # policy = pz.MaxQuality()
+    policy = pz.MinCost()
 
 config = pz.QueryProcessorConfig(
     policy=policy,
     cache=False,
     verbose=False,
-    execution_strategy="sequential",
-    optimizer_strategy="pareto",
+    progress=False,
     allow_code_synth={{ allow_code_synth }},
 )
 

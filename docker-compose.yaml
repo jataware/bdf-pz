@@ -20,8 +20,10 @@ services:
     working_dir: /jupyter
     volumes:
       - ./.beaker.conf:/jupyter/.beaker.conf
-      - ./testdata/:/jupyter/testdata/
+      - ./testdata/:/home/user/testdata/
       - ./src/bdf_pz:/jupyter/src/bdf_pz
     networks:
       - beaker
+    env_file:
+      - path: ./.env
 

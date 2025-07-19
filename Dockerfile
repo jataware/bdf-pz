@@ -8,15 +8,10 @@ RUN apt update && apt install -y lsof
 
 # Install Python requirements
 RUN pip install --upgrade --no-cache-dir hatch pip
-
-RUN pip install --no-build-isolation cloudpickle cython editables
-RUN pip install --no-build-isolation palimpzest
-RUN python -c "import palimpzest"
-
+RUN pip install --no-build-isolation cloudpickle cython editables palimpzest beaker-kernel
 # Copy local package to image and install
 COPY --chown=1000:1000 . /jupyter/
 RUN chown -R 1000:1000 /jupyter
-RUN pip install --no-build-isolation beaker-kernel
 RUN pip install --no-build-isolation -e /jupyter
 
 # Set up for running beaker server
@@ -31,4 +26,4 @@ ENV BEAKER_RUN_PATH=/var/run/beaker
 ENV BEAKER_APP=bdf_pz.app.PalimpzestApp
 
 # Service
-CMD ["python", "-m", "beaker_kernel.service.server"]
+CMD ["python", "-m", "beaker_kernel.service.server", "--IdentityProvider.token=''"]

@@ -1,0 +1,6 @@
+# Launch the docker container with this 
+1. docker compose run --rm --service-ports jupyter bash
+From inside docker use:
+python -m beaker_kernel.service.server --IdentityProvider.token='' 2> src/bdf_pz/beaker.log
+
+# MAX QUALITY DOES NOT WORK
