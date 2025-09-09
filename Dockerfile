@@ -8,7 +8,10 @@ RUN apt update && apt install -y lsof
 
 # Install Python requirements
 RUN pip install --upgrade --no-cache-dir hatch pip
-RUN pip install --no-build-isolation cloudpickle cython editables palimpzest beaker-kernel
+RUN pip install --no-build-isolation palimpzest 
+RUN pip install --no-build-isolation beaker-kernel
+RUN pip install cython
+RUN pip install editables
 # Copy local package to image and install
 COPY --chown=1000:1000 . /jupyter/
 RUN chown -R 1000:1000 /jupyter
